@@ -6,8 +6,4 @@
         version="5.0">
 
     <display-name>Archetype Created Web Application</display-name>
-    <error-page>
-        <error-code>404</error-code>
-        <location></location>
-    </error-page>
 </web-app>
