@@ -1,6 +1,6 @@
 package chegur.listener;
 
-import chegur.util.ThymeleafConfig;
+import chegur.util.ThymeleafUtil;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
@@ -13,7 +13,7 @@ public class ContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext servletContext = sce.getServletContext();
-        TemplateEngine templateEngine = ThymeleafConfig.buildTemplateEngine(servletContext);
+        TemplateEngine templateEngine = ThymeleafUtil.buildTemplateEngine(servletContext);
 
         sce.getServletContext().setAttribute("templateEngine", templateEngine);
     }

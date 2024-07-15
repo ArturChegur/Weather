@@ -1,6 +1,6 @@
 package chegur.controller;
 
-import chegur.util.ThymeleafConfig;
+import chegur.util.ThymeleafUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,7 +19,7 @@ public abstract class BaseController extends HttpServlet {
     }
 
     protected WebContext createWebContext(HttpServletRequest req, HttpServletResponse resp) {
-        return ThymeleafConfig.buildWebContext(req, resp, getServletContext());
+        return ThymeleafUtil.buildWebContext(req, resp, getServletContext());
     }
 
     protected void processTemplate(String templateName, WebContext context, HttpServletResponse resp) throws IOException {

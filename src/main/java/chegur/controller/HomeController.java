@@ -7,13 +7,11 @@ import org.thymeleaf.context.WebContext;
 
 import java.io.IOException;
 
-@WebServlet("/")
+@WebServlet("")
 public class HomeController extends BaseController {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         WebContext context = createWebContext(req, resp);
-        context.setVariable("message", "Hello, Thymeleaf!");
-
-        processTemplate("log-in", context, resp);
+        processTemplate("home", context, resp);
     }
 }
