@@ -13,11 +13,8 @@ public class HibernateUtil {
         try {
             Configuration configuration = new Configuration();
             configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
-
-            //configuration.addAnnotatedClass();
-            //configuration.addAnnotatedClass();
-
             configuration.configure();
+
             return configuration.buildSessionFactory();
         } catch (Throwable e) {
             throw new ExceptionInInitializerError(e);
