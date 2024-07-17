@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Maven Pro', sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('images/background.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            filter: blur(6px);
+            z-index: -1;
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+            z-index: 1;
+        }
+
+        .register-form {
+            background: rgba(255, 255, 255, 0.65);
+            padding: 4rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 500px;
+            text-align: left;
+        }
+
+        .register-form h2 {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .register-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .register-form label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        #registerConfirmPassword {
+            margin-bottom: 2.5rem;
+        }
+
+        .login-link {
+            display: block;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .title-line {
+            position: absolute;
+            top: 3.5rem;
+            left: 1rem;
+            right: 1rem;
+            border-top: 4px solid white;
+            margin-left: calc(2rem);
+            margin-right: calc(2rem);
+            border-top: 4px solid rgba(255, 255, 255);
+            filter: blur(3px);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.3);
+            width: 100%;
+        }
+
+        .footer a {
+            color: inherit;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="background"></div>
+<div class="title-line"></div>
+<div class="content">
+    <div class="register-form">
+        <h2>Registration</h2>
+        <form>
+            <div class="form-group">
+                <label for="registerEmail">Login</label>
+                <input type="email" class="form-control" id="registerEmail" placeholder="Your name">
+            </div>
+            <div class="form-group">
+                <label for="registerPassword">Password</label>
+                <input type="password" class="form-control" id="registerPassword" placeholder="Your password">
+            </div>
+            <div class="form-group">
+                <label for="registerConfirmPassword">Confirm Password</label>
+                <input type="password" class="form-control" id="registerConfirmPassword" placeholder="Repeat password">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+            <div class="login-link">
+                <a th:href="@{/login}">Already have an account? Log in</a>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="footer">
+    <a href="https://github.com/ArturChegur" target="_blank">© 2024–2024 ArturChegur</a>
+</div>
+</body>
+</html>

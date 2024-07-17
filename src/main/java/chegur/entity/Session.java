@@ -18,7 +18,7 @@ public class Session {
     private String guid;
 
     @ManyToOne
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "client")
     private User user;
 
     @Column(nullable = false)
