@@ -12,15 +12,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "sessions")
-public class Session {
+public class UserSession {
     @Id
     @Column(name = "id", nullable = false, length = 36)
     private String guid;
 
     @ManyToOne
-    @JoinColumn(name = "client")
+    @JoinColumn(name = "client", nullable = false)
     private User user;
 
-    @Column(nullable = false)
+    @Column(name = "expires_at", nullable = false)
     private LocalDateTime expiresAt;
 }

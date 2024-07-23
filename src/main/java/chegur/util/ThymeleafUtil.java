@@ -26,7 +26,7 @@ public class ThymeleafUtil {
         WebApplicationTemplateResolver templateResolver = new WebApplicationTemplateResolver(application);
 
         templateResolver.setTemplateMode(TemplateMode.HTML);
-        templateResolver.setPrefix("templates/");
+        templateResolver.setPrefix("WEB-INF/templates/");
         templateResolver.setSuffix(".html");
         templateResolver.setCharacterEncoding("UTF-8");
         templateResolver.setCacheable(false);
