@@ -15,7 +15,7 @@ import java.util.Optional;
 public class UserDao {
     private static final UserDao INSTANCE = new UserDao();
 
-    public Optional<User> findUser(User user) {
+    public Optional<User> getUser(User user) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             Query<User> query = session.createQuery("from User where login = :login and password = :password", User.class);

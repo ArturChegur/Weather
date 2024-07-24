@@ -1,19 +1,17 @@
 package chegur.controller;
 
-import chegur.entity.User;
 import chegur.service.UserService;
+import chegur.validator.CredentialsValidator;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import org.thymeleaf.context.WebContext;
 
 import java.io.IOException;
 
 @WebServlet("/login")
 public class LoginController extends BaseController {
-
     private final UserService userService = UserService.getInstance();
 
     @Override
@@ -27,7 +25,16 @@ public class LoginController extends BaseController {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        userService.login(username, password);
+        String errorMessage = CredentialsValidator.isDataValid(username, password);
+        WebContext context = createWebContext(req, resp);
+
+        if (errorMessage != null) {
+            context.setVariable("errorMessage", errorMessage);
+            processTemplate("register", context, resp);
+            return;
+        }
+
+        userService.logIn(username, password);
 
     }
 }

@@ -13,7 +13,6 @@ import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 
 @UtilityClass
 public class ThymeleafUtil {
-
     public static WebContext buildWebContext(HttpServletRequest req, HttpServletResponse resp, ServletContext servletContext) {
         JakartaServletWebApplication application = JakartaServletWebApplication.buildApplication(servletContext);
         IServletWebExchange webExchange = application.buildExchange(req, resp);

@@ -1,5 +1,6 @@
 package chegur.controller;
 
+import chegur.validator.CredentialsValidator;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,7 +22,7 @@ public class RegisterController extends BaseController {
         String password = req.getParameter("password");
         String confirmedPassword = req.getParameter("password_repeat");
 
-        String errorMessage = isLoginDataValid(username, password, confirmedPassword);
+        String errorMessage = CredentialsValidator.isDataValid(username, password, confirmedPassword);
         WebContext context = createWebContext(req, resp);
 
         if (errorMessage != null) {
@@ -29,22 +30,8 @@ public class RegisterController extends BaseController {
             processTemplate("register", context, resp);
             return;
         }
-        processTemplate("home", context, resp);
-    }
 
-    private static String isLoginDataValid(String username, String password, String confirmedPassword) {
-        if (username == null || username.isBlank()) {
-            return "Username can`t be empty";
-        }
-        if (password == null || password.isBlank() || confirmedPassword == null || confirmedPassword.isBlank()) {
-            return "Password can`t be empty";
-        }
-        if (!password.equals(confirmedPassword)) {
-            return "Passwords are not equal";
-        }
-        if (!username.matches("[a-zA-Z0-9]+")) {
-            return "Username should contain only English letters and numbers";
-        }
-        return null;
+        processTemplate("home", context, resp);
+        //todo add cookies;
     }
 }

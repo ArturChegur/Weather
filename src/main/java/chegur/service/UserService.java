@@ -19,8 +19,8 @@ public class UserService {
     private final UserDao userDao = UserDao.getInstance();
     private final UserMapper userMapper = UserMapper.getInstance();
 
-    public Optional<UserDto> login(String login, String password) {
-        return userDao.findUser(buildUser(login, password)).map(userMapper::mapFrom);
+    public Optional<UserDto> logIn(String login, String password) throws NoSuchAlgorithmException {
+        return userDao.getUser(buildUser(login, hashPassword(password))).map(userMapper::mapFrom);
     }
 
     public void addUser(String login, String password) {
