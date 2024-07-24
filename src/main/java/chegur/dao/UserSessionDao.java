@@ -10,8 +10,8 @@ import org.hibernate.query.Query;
 import java.util.Optional;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class SessionDao {
-    private static final SessionDao INSTANCE = new SessionDao();
+public class UserSessionDao {
+    private static final UserSessionDao INSTANCE = new UserSessionDao();
 
     public void saveSession(UserSession currentUserSession) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -30,7 +30,7 @@ public class SessionDao {
         }
     }
 
-    public static SessionDao getInstance() {
+    public static UserSessionDao getInstance() {
         return INSTANCE;
     }
 }

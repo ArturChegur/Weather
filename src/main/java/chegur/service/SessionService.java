@@ -1,6 +1,6 @@
 package chegur.service;
 
-import chegur.dao.SessionDao;
+import chegur.dao.UserSessionDao;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 public class SessionService {
     public static final SessionService INSTANCE = new SessionService();
 
-    private final SessionDao sessionDao = SessionDao.getInstance();
+    private final UserSessionDao userSessionDao = UserSessionDao.getInstance();
 
     public void addSession() {
 

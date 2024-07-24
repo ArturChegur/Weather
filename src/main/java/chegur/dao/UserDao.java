@@ -1,5 +1,6 @@
 package chegur.dao;
 
+import chegur.entity.Location;
 import chegur.entity.User;
 import chegur.exception.UserExistsException;
 import chegur.util.HibernateUtil;
@@ -32,6 +33,24 @@ public class UserDao {
             query.setParameter("login", user.getLogin());
             query.setParameter("password", user.getPassword());
             return query.uniqueResultOptional();
+        }
+    }
+
+    public void addFavouriteLocation(User user, Location location) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            user.getLocations().add(location);
+            session.saveOrUpdate(user);
+            session.getTransaction().commit();
+        }
+    }
+
+    public void deleteFavouriteLocation(User user, Location location) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            user.getLocations().remove(location);
+            session.saveOrUpdate(user);
+            session.getTransaction().commit();
         }
     }
 
