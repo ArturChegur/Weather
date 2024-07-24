@@ -5,10 +5,13 @@ import chegur.util.HibernateUtil;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import java.util.Optional;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SessionDao {
-    public static final SessionDao INSTANCE = new SessionDao();
+    private static final SessionDao INSTANCE = new SessionDao();
 
     public void saveSession(UserSession currentUserSession) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -18,6 +21,14 @@ public class SessionDao {
         }
     }
 
+    public Optional<UserSession> getSession(UserSession userSession) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            Query<UserSession> query = session.createQuery("from UserSession where guid = :guid", UserSession.class);
+            query.setParameter("guid", userSession.getGuid());
+            return query.uniqueResultOptional();
+        }
+    }
 
     public static SessionDao getInstance() {
         return INSTANCE;
