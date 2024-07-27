@@ -1,7 +1,7 @@
 package chegur.filter;
 
 import chegur.dto.UserSessionDto;
-import chegur.service.UserSessionService;
+import chegur.service.impl.UserSessionService;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.Cookie;

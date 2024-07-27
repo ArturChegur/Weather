@@ -1,5 +1,6 @@
-package chegur.controller;
+package chegur.controller.impl;
 
+import chegur.controller.BaseController;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -7,7 +8,7 @@ import org.thymeleaf.context.WebContext;
 
 import java.io.IOException;
 
-@WebServlet("")
+@WebServlet("/home")
 public class HomeController extends BaseController {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {

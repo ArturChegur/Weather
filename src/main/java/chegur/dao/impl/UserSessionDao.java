@@ -1,5 +1,6 @@
-package chegur.dao;
+package chegur.dao.impl;
 
+import chegur.dao.Dao;
 import chegur.entity.UserSession;
 import chegur.util.HibernateUtil;
 import lombok.AccessLevel;
@@ -10,10 +11,11 @@ import org.hibernate.query.Query;
 import java.util.Optional;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class UserSessionDao {
+public class UserSessionDao implements Dao<UserSession> {
     private static final UserSessionDao INSTANCE = new UserSessionDao();
 
-    public void saveSession(UserSession currentUserSession) {
+    @Override
+    public void save(UserSession currentUserSession) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             session.save(currentUserSession);

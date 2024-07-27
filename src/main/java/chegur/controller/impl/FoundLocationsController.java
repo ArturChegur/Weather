@@ -1,5 +1,6 @@
-package chegur.controller;
+package chegur.controller.impl;
 
+import chegur.controller.BaseController;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

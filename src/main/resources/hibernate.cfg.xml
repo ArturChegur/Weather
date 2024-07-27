@@ -3,7 +3,7 @@
         "-//Hibernate/Hibernate Configuration DTD//EN"
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <userSession-factory>
+    <session-factory>
         <property name="connection.driver_class">org.postgresql.Driver</property>
         <property name="connection.url">jdbc:postgresql://localhost:5432/postgres</property>
         <property name="connection.username">artur</property>
@@ -17,5 +17,5 @@
         <mapping class="chegur.entity.Location"/>
         <mapping class="chegur.entity.UserSession"/>
         <mapping class="chegur.entity.User"/>
-    </userSession-factory>
+    </session-factory>
 </hibernate-configuration>

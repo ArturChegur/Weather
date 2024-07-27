@@ -1,7 +1,8 @@
-package chegur.mapper;
+package chegur.mapper.impl;
 
 import chegur.dto.UserDto;
 import chegur.entity.User;
+import chegur.mapper.Mapper;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ public class UserMapper implements Mapper<User, UserDto> {
     public UserDto mapFrom(User user) {
         return UserDto.builder()
                 .login(user.getLogin())
+                .locations(user.getLocations())
                 .build();
     }
 

@@ -1,5 +1,6 @@
-package chegur.dao;
+package chegur.dao.impl;
 
+import chegur.dao.Dao;
 import chegur.entity.Location;
 import chegur.entity.User;
 import chegur.exception.UserExistsException;
@@ -13,10 +14,11 @@ import org.hibernate.query.Query;
 import java.util.Optional;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class UserDao {
+public class UserDao implements Dao<User> {
     private static final UserDao INSTANCE = new UserDao();
 
-    public void saveUser(User user) {
+    @Override
+    public void save(User user) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
             session.save(user);
