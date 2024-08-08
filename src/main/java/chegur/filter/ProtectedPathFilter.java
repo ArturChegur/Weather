@@ -26,7 +26,7 @@ public class ProtectedPathFilter implements Filter {
             return;
         }
 
-        Optional<String> sessionCookie = CookieHandler.getSessionCookie(cookies);
+        Optional<String> sessionCookie = CookieHandler.getSessionCookie(httpRequest);
 
         if (sessionCookie.isPresent()) {
             if (sessionService.isSessionActive(sessionCookie.get())) {

@@ -74,13 +74,12 @@
             background-color: rgba(255, 255, 255, 0.8);
             color: black;
             border: none;
-            border-radius: 2rem;
-            padding: 0.5rem 2rem;
+            border-radius: 2.5rem;
+            padding: 0.5rem 2.5rem;
             font-size: 1rem;
             transition: background-color 0.3s ease;
             font-weight: 500;
             margin-right: 1rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .top-bar .btn:hover {
@@ -94,6 +93,7 @@
 
         .top-bar .user-info span {
             margin-right: 1rem;
+            font-size: 1.25rem;
         }
 
         .top-bar .datetime {
@@ -242,7 +242,7 @@
     </form>
     <div class="datetime"></div>
     <div class="user-info">
-        <span th:text="@{username}">Username</span>
+        <span th:text="${username}">Username</span>
         <form th:action="@{/home}" method="post" style="margin: 0;">
             <button type="submit" class="btn" name="action" value="logout">LogOut</button>
         </form>

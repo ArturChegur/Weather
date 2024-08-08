@@ -1,4 +1,4 @@
-package chegur.controller.util;
+package chegur.controller.error;
 
 import chegur.controller.BaseController;
 import jakarta.servlet.annotation.WebServlet;

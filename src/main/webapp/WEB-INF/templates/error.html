@@ -66,16 +66,19 @@
             color: black;
         }
 
-        .error-form .link {
-            display: inline-block;
-            color: rgb(157, 223, 246);
-            text-decoration: none;
-            font-size: 1.25rem;
+        .btn {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: black;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.5rem 1.5rem;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
             font-weight: 500;
         }
 
-        .error-form .link:hover {
-            text-decoration: underline;
+        .btn:hover {
+            background-color: rgba(255, 255, 255, 0.6);
         }
 
         .footer {
@@ -99,7 +102,7 @@
         <div class="form-group">
             <p th:text="${errorMessage}"></p>
         </div>
-        <a class="link" th:href="${redirectUrl}">Go to Home page</a>
+        <a class="btn" th:href="${redirectUrl}">Go to Home page</a>
     </div>
 </div>
 <div class="footer">
