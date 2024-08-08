@@ -1,4 +1,4 @@
-package chegur.service.impl;
+package chegur.service;
 
 public class LocationService {
 }

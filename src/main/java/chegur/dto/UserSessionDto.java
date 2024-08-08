@@ -1,6 +1,5 @@
 package chegur.dto;
 
-import chegur.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +9,6 @@ import lombok.Setter;
 @Builder
 public class UserSessionDto {
     private String guid;
-    private User user;
+    private UserDto userDto;
     private boolean isExpired;
 }

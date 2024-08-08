@@ -1,8 +1,8 @@
-package chegur.controller.impl;
+package chegur.controller.page;
 
 import chegur.controller.BaseController;
-import chegur.exception.WrongCredentialsException;
-import chegur.service.impl.UserService;
+import chegur.exception.UserNotFoundException;
+import chegur.service.AuthenticationService;
 import chegur.validator.CredentialsValidator;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,7 +13,8 @@ import java.io.IOException;
 
 @WebServlet("/register")
 public class RegisterController extends BaseController {
-    private final UserService userService = UserService.getInstance();
+    private final AuthenticationService authenticationService = AuthenticationService.getInstance();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         WebContext context = createWebContext(req, resp);
@@ -30,17 +31,22 @@ public class RegisterController extends BaseController {
         WebContext context = createWebContext(req, resp);
 
         if (errorMessage != null) {
-            context.setVariable("errorMessage", errorMessage);
-            processTemplate("register", context, resp);
+            processError(errorMessage, context, resp);
             return;
         }
-        try {
-            userService.logIn(username, password);
-        } catch (WrongCredentialsException e) {
 
+        try {
+            authenticationService.register(username, password);
+        } catch (UserNotFoundException e) {
+            processError("Username already taken", context, resp);
+            return;
         }
 
-        processTemplate("home", context, resp);
+        resp.sendRedirect("login");
+    }
 
+    private void processError(String error, WebContext context, HttpServletResponse resp) throws IOException {
+        context.setVariable("errorMessage", error);
+        processTemplate("register", context, resp);
     }
 }

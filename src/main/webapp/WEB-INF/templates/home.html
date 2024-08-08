@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Weather Dashboard</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -12,8 +12,6 @@
             height: 100%;
             margin: 0;
             font-family: 'Maven Pro', sans-serif;
-            display: flex;
-            flex-direction: column;
         }
 
         .background {
@@ -22,7 +20,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('images/background.png');
+            background-image: url('/Weather/images/background.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -135,6 +133,45 @@
             margin-top: 4rem;
         }
 
+        .weather-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .weather-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 1rem;
+            padding: 1rem;
+            width: 250px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .weather-card h3 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .weather-card p {
+            margin: 0.5rem 0;
+        }
+
+        .weather-card .btn-delete {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: red;
+            font-size: 1.2rem;
+        }
+
         .footer {
             text-align: center;
             padding: 1rem;
@@ -169,6 +206,11 @@
                 width: 100%;
                 justify-content: space-between;
             }
+
+            .weather-cards {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
     <script>
@@ -184,26 +226,39 @@
             updateDateTime();
             setInterval(updateDateTime, 1000);
         });
+
+        function deleteCard(event) {
+            const card = event.target.closest('.weather-card');
+            card.remove();
+        }
     </script>
 </head>
 <body>
 <div class="background"></div>
 <div class="top-bar">
-    <form>
-        <input type="text" class="form-control" placeholder="Enter city name">
-        <button type="submit" class="btn">Search</button>
+    <form th:action="@{/home}" method="post">
+        <input type="text" class="form-control" name="query" placeholder="Enter city name">
+        <button type="submit" class="btn" name="action" value="search">Search</button>
     </form>
     <div class="datetime"></div>
     <div class="user-info">
-        <span>Username</span>
-        <button type="button" class="btn">LogOut</button>
+        <span th:text="@{username}">Username</span>
+        <form th:action="@{/home}" method="post" style="margin: 0;">
+            <button type="submit" class="btn" name="action" value="logout">LogOut</button>
+        </form>
     </div>
 </div>
 <div class="content">
-
+    <div class="weather-cards">
+        <div class="weather-card" th:each="city : ${cities}">
+            <h3 th:text="${city.name}">City Name</h3>
+            <p>Temperature: <span th:text="${city.temperature}">Temp</span>°C</p>
+            <p>Humidity: <span th:text="${city.humidity}">Humidity</span>%</p>
+            <p>Wind: <span th:text="${city.wind}">Wind</span> km/h</p>
+            <button class="btn-delete" onclick="deleteCard(event)">×</button>
+        </div>
+    </div>
 </div>
 <div class="footer">
     <a href="https://github.com/ArturChegur" target="_blank">© 2024–2024 Created by ArturChegur</a>
 </div>
-</body>
-</html>

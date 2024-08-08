@@ -1,10 +1,12 @@
-package chegur.controller.impl;
+package chegur.controller.page;
 
 import chegur.controller.BaseController;
-import chegur.service.impl.UserService;
+import chegur.exception.UserNotFoundException;
+import chegur.service.AuthenticationService;
 import chegur.validator.CredentialsValidator;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.thymeleaf.context.WebContext;
@@ -13,7 +15,7 @@ import java.io.IOException;
 
 @WebServlet("/login")
 public class LoginController extends BaseController {
-    private final UserService userService = UserService.getInstance();
+    private final AuthenticationService authenticationService = AuthenticationService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -30,9 +32,25 @@ public class LoginController extends BaseController {
         WebContext context = createWebContext(req, resp);
 
         if (errorMessage != null) {
-            context.setVariable("errorMessage", errorMessage);
-            processTemplate("register", context, resp);
+            processError(errorMessage, context, resp);
+            return;
         }
 
+        try {
+            String guid = (String) req.getAttribute("userCookies");
+            String sessionCookie = authenticationService.logIn(username, password, guid);
+
+            resp.addCookie(new Cookie("JSESSIONID", sessionCookie));
+        } catch (UserNotFoundException e) {
+            processError("Username or password is incorrect", context, resp);
+            return;
+        }
+
+        resp.sendRedirect("home");
+    }
+
+    private void processError(String error, WebContext context, HttpServletResponse resp) throws IOException {
+        context.setVariable("errorMessage", error);
+        processTemplate("login", context, resp);
     }
 }

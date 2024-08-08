@@ -3,8 +3,8 @@ package chegur.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -24,6 +24,6 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "user")
-    private List<Location> locations = new ArrayList<>();
+    @OneToMany(mappedBy = "author")
+    private Set<Location> locations = new HashSet<>();
 }

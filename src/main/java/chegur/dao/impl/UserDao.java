@@ -24,7 +24,7 @@ public class UserDao implements Dao<User> {
             session.save(user);
             session.getTransaction().commit();
         } catch (HibernateException e) {
-            throw new UserExistsException("User with this username already exists");
+            throw new UserExistsException();
         }
     }
 

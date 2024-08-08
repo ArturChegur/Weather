@@ -11,13 +11,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserSessionMapper implements Mapper<UserSession, UserSessionDto> {
     private static final UserSessionMapper INSTANCE = new UserSessionMapper();
+    private final UserMapper userMapper = UserMapper.getInstance();
 
     @Override
     public UserSessionDto mapFrom(UserSession userSession) {
         return UserSessionDto.builder()
                 .guid(userSession.getGuid())
-                .user(userSession.getUser())
-                .isExpired(userSession.getExpiresAt().isAfter(LocalDateTime.now()))
+                .userDto(userMapper.mapFrom(userSession.getUser()))
+                .isExpired(userSession.getExpiresAt().isBefore(LocalDateTime.now()))
                 .build();
     }
 
