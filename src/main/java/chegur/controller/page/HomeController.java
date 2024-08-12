@@ -49,28 +49,17 @@ public class HomeController extends BaseController {
 
         if (guid.isEmpty()) {
             resp.sendRedirect("login");
-            return;
-        }
 
-        if (action.equals("search")) {
             return;
-            //todo using api interface and network
         }
 
         if (action.equals("logout")) {
-            handleLogout(guid.get());
+            authenticationService.logOut(guid.get());
             resp.sendRedirect("login");
+
             return;
         }
 
         resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action");
-    }
-
-    private void handleLogout(String guid) {
-        authenticationService.logOut(guid);
-    }
-
-    private void handleSearch() {
-        //todo
     }
 }

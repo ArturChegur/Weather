@@ -6,9 +6,6 @@ import chegur.util.HibernateUtil;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
-
-import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LocationDao implements Dao<Location> {
@@ -20,15 +17,6 @@ public class LocationDao implements Dao<Location> {
             session.beginTransaction();
             session.save(location);
             session.getTransaction().commit();
-        }
-    }
-
-    public List<Location> getLocation(Location location) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            session.beginTransaction();
-            Query<Location> query = session.createQuery("from Location where name = :name", Location.class);
-            query.setParameter("name", location.getName());
-            return query.getResultList();
         }
     }
 

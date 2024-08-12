@@ -7,6 +7,8 @@ import lombok.*;
 @Builder
 public class WeatherRequestDto {
     private String cityName;
+
     private Double latitude;
+
     private Double longitude;
 }

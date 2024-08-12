@@ -56,7 +56,7 @@ public class SessionService {
         return UserSession.builder()
                 .guid(guid)
                 .user(user)
-                .expiresAt(LocalDateTime.now().plusMinutes(1))
+                .expiresAt(LocalDateTime.now().plusMinutes(60))
                 .build();
     }
 
