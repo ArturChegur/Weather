@@ -7,230 +7,111 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            font-family: 'Maven Pro', sans-serif;
-        }
-
-        .background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('/Weather/images/background.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            z-index: -1;
-        }
-
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            width: 100%;
-            position: fixed;
-            top: 0;
-            z-index: 1;
-        }
-
-        .top-bar form {
-            display: flex;
-            align-items: center;
-        }
-
-        .top-bar input {
-            background: rgba(255, 255, 255, 0);
-            border-radius: 2rem;
-            font-size: 1rem;
-            color: white;
-            padding: 0.5rem 1rem;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            margin-right: 1rem;
-            width: 250px;
-            border: 1px solid rgba(0, 0, 0, 0.7);
-        }
-
-        .top-bar input::placeholder {
-            color: rgba(0, 0, 0, 0.7);
-        }
-
-        .top-bar input:focus {
-            background: rgba(255, 255, 255, 0) !important;
-            outline: none;
-            border: 1px solid rgba(0, 0, 0, 0.7);
-        }
-
-        .top-bar .btn {
-            background-color: rgba(255, 255, 255, 0.8);
-            color: black;
-            border: none;
-            border-radius: 2.5rem;
-            padding: 0.5rem 2.5rem;
-            font-size: 1rem;
-            transition: background-color 0.3s ease;
-            font-weight: 500;
-            margin-right: 1rem;
-        }
-
-        .top-bar .btn:hover {
-            background-color: rgba(255, 255, 255, 0.4);
-        }
-
-        .top-bar .user-info {
-            display: flex;
-            align-items: center;
-        }
-
-        .top-bar .user-info span {
-            margin-right: 1rem;
-            font-size: 1.25rem;
-        }
-
-        .top-bar .datetime {
-            font-size: 1.5rem;
-            color: white;
-            margin: 0;
-            padding: 0.5rem 1rem;
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            animation: shimmer 2s infinite;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
-            white-space: nowrap;
-        }
-
-        @keyframes shimmer {
-            0% {
-                opacity: 1;
-                box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
-            }
-            50% {
-                opacity: 0.5;
-                box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
-            }
-            100% {
-                opacity: 1;
-                box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
-            }
-        }
-
-        .content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            flex: 1;
-            z-index: 0;
-            margin-top: 4rem;
-        }
-
-        .weather-cards {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-
-        .weather-card {
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 1rem;
-            padding: 1rem;
-            width: 250px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .weather-card h3 {
-            margin: 0;
-            font-size: 1.5rem;
-        }
-
-        .weather-card p {
-            margin: 0.5rem 0;
-        }
-
-        .weather-card .btn-delete {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: none;
-            border: none;
-            color: red;
-            font-size: 1.2rem;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.3);
-            width: 100%;
-            position: fixed;
-            bottom: 0;
-            z-index: 1;
-        }
-
-        .footer a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        @media (max-width: 768px) {
-            .top-bar {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .top-bar form {
-                width: 100%;
-                margin-bottom: 1rem;
-            }
-
-            .top-bar .datetime {
-                margin-bottom: 1rem;
-            }
-
-            .top-bar .user-info {
-                width: 100%;
-                justify-content: space-between;
-            }
-
-            .weather-cards {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="/Weather/css/home-found-locations.css">
     <script>
-        function updateDateTime() {
-            const now = new Date();
-            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            const dayName = days[now.getDay()];
-            const datetimeElement = document.querySelector('.datetime');
-            datetimeElement.textContent = `${dayName}, ${now.toLocaleTimeString('en-US', {hour12: false})}, ${now.getFullYear()}`;
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const messages = [
+                "Weather forecast: 100% chance of unpredictable showers!",
+                "Ever met a weather forecast that's as moody as a cat? We have!",
+                "Our weather updates are like your ex – sometimes sunny, sometimes stormy!",
+                "Today's forecast: A mix of sunshine and confusion. Enjoy!",
+                "Weather tip: When life gives you rain, make sure you have an umbrella!",
+                "Feel like the weather’s playing hide and seek? So do we!",
+                "Weather update: It's raining cats and dogs. Better get a bigger umbrella!",
+                "Our forecasts are like roller coasters – thrilling and occasionally terrifying!",
+                "Check out today’s weather – it's like a box of chocolates, you never know what you’ll get!",
+                "Weather forecast: 50% chance of sunshine, 50% chance of complaints!",
+                "No way, bro! The weather’s been so weird it’s like someone’s playing a prank!",
+                "Dude, this weather is as unpredictable as a squirrel on espresso!",
+                "You gotta see this weather – it’s like the universe is testing its mood swings!",
+                "No joke: It’s raining so much, even the ducks are asking for a raincheck!",
+                "Check it: The weather’s got a mind of its own – bring sunglasses and a raincoat!",
+                "Ever seen a weather forecast this quirky? It’s like the weather’s having a midlife crisis!",
+                "Weather update: Clouds are fighting for dominance. Sunny spells are just gossip!",
+                "Guess what? The weather's confused – one minute it’s hot, the next minute it's cold!",
+                "Man, this weather’s got more twists and turns than a soap opera!",
+                "Dude, if the weather were a character, it’d be a dramatic soap opera star!",
+                "Yo, the forecast’s so wacky today, even the meteorologists are scratching their heads!",
+                "No kidding: The weather’s decided to play dress-up – expect sun, rain, and maybe a rainbow!",
+                "Bro, this weather’s throwing more surprises than a magician on a sugar high!",
+                "Check it: Weather update – it’s like a soap opera with unexpected plot twists!"
+            ];
 
-        document.addEventListener('DOMContentLoaded', (event) => {
-            updateDateTime();
-            setInterval(updateDateTime, 1000);
+            function updateMessage() {
+                const messageElement = document.querySelector('.marquee span');
+                messageElement.textContent = messages[Math.floor(Math.random() * messages.length)];
+            }
+
+            function formatNumber(value, decimals) {
+                let [integerPart, decimalPart = ''] = value.toString().split('.');
+                decimalPart = decimalPart.padEnd(decimals, '0');
+                return `${integerPart}.${decimalPart.slice(0, decimals)}`;
+            }
+
+            function updateCoords() {
+                document.querySelectorAll('.city-card').forEach(card => {
+                    const latitudeElement = card.querySelector('.latitude');
+                    const longitudeElement = card.querySelector('.longitude');
+                    const temp = card.querySelector('.temperature');
+                    const tempMin = card.querySelector('.tempMin');
+                    const tempMax = card.querySelector('.tempMax');
+                    const feelsLike = card.querySelector('.feelsLike');
+
+
+                    if (latitudeElement && longitudeElement) {
+                        latitudeElement.textContent = formatNumber(latitudeElement.textContent, 3);
+                        longitudeElement.textContent = formatNumber(longitudeElement.textContent, 3);
+                    }
+
+                    if (temp) {
+                        temp.textContent = (+temp.textContent).toFixed(1);
+                    }
+
+                    if (tempMin) {
+                        tempMin.textContent = (+tempMin.textContent).toFixed(1);
+                    }
+
+                    if (tempMax) {
+                        tempMax.textContent = (+tempMax.textContent).toFixed(1);
+                    }
+
+                    if (feelsLike) {
+                        feelsLike.textContent = (+feelsLike.textContent).toFixed(1);
+                    }
+                });
+            }
+
+            function deleteCity(event, cityId, card) {
+                event.preventDefault();
+                fetch('/Weather/home', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `cityId=${cityId}`
+                }).then(response => {
+                    if (response.ok) {
+                        card.classList.add('fade-out');
+                        card.addEventListener('animationend', () => {
+                            card.remove();
+                        });
+                    }
+                }).catch(error => {
+                    console.error('Error deleting city:', error);
+                });
+            }
+
+            document.querySelectorAll('.city-card').forEach(card => {
+                card.addEventListener('click', (event) => {
+                    const cityId = card.querySelector('.city-id').value;
+                    deleteCity(event, cityId, card);
+                });
+            });
+
+            updateMessage();
+            updateCoords();
+            setInterval(updateMessage, 15000);
         });
-
-        function deleteCard(event) {
-            const card = event.target.closest('.weather-card');
-            card.remove();
-        }
     </script>
 </head>
 <body>
@@ -240,7 +121,9 @@
         <input type="text" class="form-control" name="cityName" placeholder="Enter city name">
         <button type="submit" class="btn" name="action" value="search">Search</button>
     </form>
-    <div class="datetime"></div>
+    <div class="marquee">
+        <span>You can delete cities to see the weather in them just by click</span>
+    </div>
     <div class="user-info">
         <span th:text="${username}">Username</span>
         <form th:action="@{/home}" method="post" style="margin: 0;">
@@ -249,16 +132,32 @@
     </div>
 </div>
 <div class="content">
-    <div class="weather-cards">
-        <div class="weather-card" th:each="city : ${cities}">
-            <h3 th:text="${city.name}">City Name</h3>
-            <p>Temperature: <span th:text="${city.temperature}">Temp</span>°C</p>
-            <p>Humidity: <span th:text="${city.humidity}">Humidity</span>%</p>
-            <p>Wind: <span th:text="${city.wind}">Wind</span> km/h</p>
-            <button class="btn-delete" onclick="deleteCard(event)">×</button>
+    <div class="city-cards">
+        <div class="city-card" th:each="city : ${weatherCities}">
+            <input type="hidden" th:value="${city.cityId}" class="city-id"/>
+            <h3 th:text="${city.cityName}">City Name</h3>
+            <p>Latitude: <span class="latitude" th:text="${city.coord.lat}">Latitude</span></p>
+            <p>Longitude: <span class="longitude" th:text="${city.coord.lon}">Longitude</span></p>
+            <p><i class="fas fa-thermometer-half"></i> Temperature: <span class="temperature"
+                                                                          th:text="${city.main.temp}">Temperature</span>
+                °C</p>
+            <p><i class="fas fa-temperature-low"></i> Feels Like: <span class="feelsLike"
+                                                                        th:text="${city.main.feelsLike}">Feels Like</span>
+                °C</p>
+            <p><i class="fas fa-temperature-high"></i> Temperature Min: <span class="tempMin"
+                                                                              th:text="${city.main.tempMin}">Temperature Min</span>
+                °C</p>
+            <p><i class="fas fa-temperature-high"></i> Temperature Max: <span class="tempMax"
+                                                                              th:text="${city.main.tempMax}">Temperature Max</span>
+                °C</p>
+            <p><i class="fas fa-tachometer-alt"></i> Pressure: <span th:text="${city.main.pressure}">Pressure</span> hPa
+            </p>
+            <p><i class="fas fa-tint"></i> Humidity: <span th:text="${city.main.humidity}">Humidity</span> %</p>
+            <p><i class="fas fa-wind"></i> Wind Speed: <span th:text="${city.wind.speed}">Wind Speed</span> m/s</p>
         </div>
     </div>
 </div>
 <div class="footer">
-    <a href="https://github.com/ArturChegur" target="_blank">© 2024–2024 Created by ArturChegur</a>
+    <a href="https://github.com/ArturChegur" target="_blank">© 2024–2024 Created by ArturChegur. All rights
+        reserved.</a>
 </div>
