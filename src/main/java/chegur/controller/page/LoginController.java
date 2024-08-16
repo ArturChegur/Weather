@@ -4,7 +4,6 @@ import chegur.controller.BaseController;
 import chegur.exception.UserNotFoundException;
 import chegur.service.AuthenticationService;
 import chegur.validator.CredentialsValidator;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,7 +23,7 @@ public class LoginController extends BaseController {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
@@ -37,9 +36,7 @@ public class LoginController extends BaseController {
         }
 
         try {
-            String guid = (String) req.getAttribute("userCookies");
-            String sessionCookie = authenticationService.logIn(username, password, guid);
-
+            String sessionCookie = authenticationService.logIn(username, password);
             resp.addCookie(new Cookie("JSESSIONID", sessionCookie));
         } catch (UserNotFoundException e) {
             processError("Username or password is incorrect", context, resp);

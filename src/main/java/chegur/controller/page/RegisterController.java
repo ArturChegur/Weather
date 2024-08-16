@@ -1,6 +1,7 @@
 package chegur.controller.page;
 
 import chegur.controller.BaseController;
+import chegur.exception.UserExistsException;
 import chegur.exception.UserNotFoundException;
 import chegur.service.AuthenticationService;
 import chegur.validator.CredentialsValidator;
@@ -37,7 +38,7 @@ public class RegisterController extends BaseController {
 
         try {
             authenticationService.register(username, password);
-        } catch (UserNotFoundException e) {
+        } catch (UserExistsException e) {
             processError("Username already taken", context, resp);
             return;
         }

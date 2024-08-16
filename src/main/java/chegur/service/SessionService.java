@@ -1,11 +1,10 @@
 package chegur.service;
 
 import chegur.dao.impl.UserSessionDao;
-import chegur.dto.UserSessionDto;
 import chegur.entity.User;
 import chegur.entity.UserSession;
 import chegur.exception.SessionNotFoundException;
-import chegur.mapper.impl.UserSessionMapper;
+import chegur.exception.UserNotFoundException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -15,26 +14,25 @@ import java.util.UUID;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SessionService {
-    public static final SessionService INSTANCE = new SessionService();
+    private static final SessionService INSTANCE = new SessionService();
     private final UserSessionDao userSessionDao = UserSessionDao.getInstance();
-    private final UserSessionMapper userSessionMapper = UserSessionMapper.getInstance();
 
-    public String startSession(User user, String guid) {
-        if (guid != null) {
-            invalidateSession(guid);
-        }
-
+    public String startSession(User user) {
         return createSession(user);
     }
 
-    public UserSessionDto getSessionData(String guid) {
+    public User getSessionUser(String guid) {
         Optional<UserSession> userSession = userSessionDao.getSession(buildUserSession(guid, null));
-        return userSession.map(userSessionMapper::mapFrom).orElse(null);
+
+        if (userSession.isPresent()) {
+            return userSession.get().getUser();
+        } else {
+            throw new UserNotFoundException();
+        }
     }
 
     public boolean isSessionActive(String guid) {
         Optional<UserSession> userSession = userSessionDao.getSession(buildUserSession(guid, null));
-
         return userSession.map(session -> session.getExpiresAt().isAfter(LocalDateTime.now())).orElse(false);
     }
 

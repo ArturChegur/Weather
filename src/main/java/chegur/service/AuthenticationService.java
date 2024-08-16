@@ -6,6 +6,7 @@ import chegur.exception.UserExistsException;
 import chegur.exception.UserNotFoundException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.hibernate.HibernateException;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -15,14 +16,15 @@ import java.util.Optional;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AuthenticationService {
     private static final AuthenticationService INSTANCE = new AuthenticationService();
+
     private final UserDao userDao = UserDao.getInstance();
     private final SessionService sessionService = SessionService.getInstance();
 
-    public String logIn(String login, String password, String guid) {
+    public String logIn(String login, String password) {
         Optional<User> user = userDao.getUser(buildUser(login, hashPassword(password)));
 
         if (user.isPresent()) {
-            return sessionService.startSession(user.get(), guid);
+            return sessionService.startSession(user.get());
         } else {
             throw new UserNotFoundException();
         }
@@ -31,8 +33,8 @@ public class AuthenticationService {
     public void register(String login, String password) {
         try {
             userDao.save(buildUser(login, hashPassword(password)));
-        } catch (UserExistsException e) {
-            throw new UserNotFoundException();
+        } catch (HibernateException e) {
+            throw new UserExistsException();
         }
     }
 

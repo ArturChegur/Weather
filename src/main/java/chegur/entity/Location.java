@@ -11,7 +11,11 @@ import java.math.BigDecimal;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "locations")
+@ToString
+@EqualsAndHashCode
+@Table(name = "locations", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"author", "latitude", "longitude"})
+})
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

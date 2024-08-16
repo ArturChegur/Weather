@@ -10,11 +10,14 @@ import java.util.Set;
 
 @WebFilter("/*")
 public class BaseFilter implements Filter {
-    private static final Set<String> ALLOWED_PATH = Set.of("/Weather/home",
+    private static final Set<String> ALLOWED_PATH = Set.of(
+            "/Weather/home",
             "/Weather/found-locations",
             "/Weather/login",
             "/Weather/register",
-            "/Weather/images/background.png");
+            "/Weather/images/background.png",
+            "/Weather/css/home-found-locations.css",
+            "/Weather/css/login-registration.css");
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

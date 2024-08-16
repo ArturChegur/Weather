@@ -11,7 +11,7 @@
 
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL95Dialect</property>
         <property name="format_sql">true</property>
-        <property name="hibernate.hbm2ddl.auto">create-drop</property>
+        <property name="hibernate.hbm2ddl.auto">validate</property>
 
         <mapping class="chegur.entity.Location"/>
         <mapping class="chegur.entity.UserSession"/>

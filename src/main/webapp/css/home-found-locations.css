@@ -131,7 +131,7 @@ body, html {
 }
 
 .city-card {
-    background: rgba(217, 246, 255, 0.63);
+    background: rgba(217, 246, 255, 0.65);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin: 1rem;
@@ -157,6 +157,10 @@ body, html {
 
 .city-card p {
     margin: 0.5rem 0;
+}
+
+.city-card.added {
+    background: rgba(138, 195, 220, 0.75);
 }
 
 .footer {

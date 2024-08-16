@@ -29,7 +29,7 @@ public class UserSessionDao implements Dao<UserSession> {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
 
-            Query query = session.createQuery("delete from UserSession where guid = :guid");
+            Query<?> query = session.createQuery("delete from UserSession where guid = :guid");
             query.setParameter("guid", guid);
 
             query.executeUpdate();

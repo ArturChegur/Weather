@@ -1,16 +1,13 @@
-package chegur.api.impl;
+package chegur.api;
 
-import chegur.api.OpenWeatherAPI;
-import chegur.dto.weather.WeatherRequestDto;
-import chegur.dto.weather.GeocodingResponseDto;
-import chegur.exception.ConnectionErrorException;
+import chegur.dto.WeatherRequestDto;
+import chegur.dto.GeocodingResponseDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -18,7 +15,7 @@ import java.net.http.HttpResponse;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class GeoCodingAPI implements OpenWeatherAPI<GeocodingResponseDto, WeatherRequestDto> {
+public class GeoCodingAPI {
     private static final GeoCodingAPI INSTANCE = new GeoCodingAPI();
 
     private static final String BASE_URL = "http://api.openweathermap.org/geo/1.0/direct?q=";
@@ -26,7 +23,6 @@ public class GeoCodingAPI implements OpenWeatherAPI<GeocodingResponseDto, Weathe
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    @Override
     public List<GeocodingResponseDto> makeCall(WeatherRequestDto entity) {
         HttpResponse<String> resp;
         HttpClient client = HttpClient.newHttpClient();
@@ -40,14 +36,15 @@ public class GeoCodingAPI implements OpenWeatherAPI<GeocodingResponseDto, Weathe
 
         try {
             resp = client.send(req, HttpResponse.BodyHandlers.ofString());
-        } catch (InterruptedException | IOException e) {
-            throw new ConnectionErrorException();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
         try {
-            return objectMapper.readValue(resp.body(), new TypeReference<>() {});
+            return objectMapper.readValue(resp.body(), new TypeReference<>() {
+            });
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("Internal server error");
+            throw new RuntimeException(e);
         }
     }
 
