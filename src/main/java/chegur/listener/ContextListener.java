@@ -16,9 +16,9 @@ public class ContextListener implements ServletContextListener {
         ServletContext servletContext = sce.getServletContext();
         TemplateEngine templateEngine = ThymeleafUtil.buildTemplateEngine(servletContext);
 
-        String dbUrl = "jdbc:postgresql://localhost:5432/postgres";//System.getenv("DB_URL");
-        String dbUser = "artur";//System.getenv("DB_USER");
-        String dbPassword = "chegur";//System.getenv("DB_PASSWORD");
+        String dbUrl = System.getenv("DATABASE_URL");
+        String dbUser = System.getenv("DATABASE_USER");
+        String dbPassword = System.getenv("DATABASE_PASSWORD");
 
         Flyway flyway = Flyway.configure()
                 .dataSource(dbUrl, dbUser, dbPassword)

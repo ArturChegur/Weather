@@ -1,12 +1,12 @@
 services:
   db:
-    image: postgres:latest
+    image: postgres:13
     environment:
-      POSTGRES_USER: artur
-      POSTGRES_PASSWORD: chegur
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: weather
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql@13/data
     ports:
       - "5432:5432"
 
@@ -15,9 +15,10 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: jdbc:postgresql://db:5432/weather
-      DATABASE_USER: artur
-      DATABASE_PASSWORD: chegur
+      DATABASE_URL: ${DB_URL}
+      DATABASE_USER: ${DB_USER}
+      DATABASE_PASSWORD: ${DB_PASSWORD}
+      API_TOKEN: ${API_TOKEN}
     ports:
       - "8080:8080"
 
