@@ -1,6 +1,7 @@
 package chegur.controller.page;
 
 import chegur.controller.BaseController;
+import chegur.exception.CredentialsException;
 import chegur.exception.UserNotFoundException;
 import chegur.service.AuthenticationService;
 import chegur.validator.CredentialsValidator;
@@ -27,19 +28,14 @@ public class LoginController extends BaseController {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        String errorMessage = CredentialsValidator.isDataValid(username, password);
         WebContext context = createWebContext(req, resp);
 
-        if (errorMessage != null) {
-            processError(errorMessage, context, resp);
-            return;
-        }
-
         try {
+            CredentialsValidator.validateData(username, password);
             String sessionCookie = authenticationService.logIn(username, password);
             resp.addCookie(new Cookie("JSESSIONID", sessionCookie));
-        } catch (UserNotFoundException e) {
-            processError("Username or password is incorrect", context, resp);
+        } catch (CredentialsException | UserNotFoundException e) {
+            processError(e.getMessage(), context, resp);
             return;
         }
 

@@ -1,9 +1,8 @@
 package chegur.controller.page;
 
 import chegur.controller.BaseController;
-import chegur.dto.OneCallResponseDto;
+import chegur.dto.OpenWeatherResponseDto;
 import chegur.dto.WeatherRequestDto;
-import chegur.service.AuthenticationService;
 import chegur.service.CityWeatherService;
 import chegur.service.SessionService;
 import chegur.util.CookieHandler;
@@ -18,7 +17,6 @@ import java.util.Optional;
 
 @WebServlet("/home")
 public class HomeController extends BaseController {
-    private final AuthenticationService authenticationService = AuthenticationService.getInstance();
     private final CityWeatherService cityWeatherService = CityWeatherService.getInstance();
     private final SessionService sessionService = SessionService.getInstance();
 
@@ -27,12 +25,18 @@ public class HomeController extends BaseController {
         WebContext context = createWebContext(req, resp);
 
         Optional<String> guid = CookieHandler.getSessionCookie(req);
-        List<OneCallResponseDto> citiesWeather = List.of();
+        List<OpenWeatherResponseDto> citiesWeather;
+
+        if (guid.isEmpty()) {
+            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
 
         try {
             citiesWeather = cityWeatherService.getWeatherInCities(guid.get());
         } catch (RuntimeException e) {
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Wrong Weather API call");
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+            return;
         }
 
         context.setVariable("username", sessionService.getSessionUser(guid.get()).getLogin());
@@ -43,13 +47,7 @@ public class HomeController extends BaseController {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String cityId;
-
-        try {
-            cityId = req.getParameter("cityId");
-        } catch (NumberFormatException e) {
-            throw new RuntimeException(e);
-        }
+        String cityId = req.getParameter("cityId");
 
         Optional<String> guid = CookieHandler.getSessionCookie(req);
 
@@ -58,16 +56,14 @@ public class HomeController extends BaseController {
             return;
         }
 
-        if (cityId == null) {
-            authenticationService.logOut(guid.get());
-            resp.sendRedirect("login");
-            return;
+        try {
+            WeatherRequestDto weatherRequestDto = WeatherRequestDto.builder()
+                    .cityId(Integer.parseInt(cityId))
+                    .build();
+
+            cityWeatherService.deleteCityFromFavourites(weatherRequestDto, guid.get());
+        } catch (Exception e) {
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error during deleting city");
         }
-
-        WeatherRequestDto weatherRequestDto = WeatherRequestDto.builder()
-                .cityId(Integer.parseInt(cityId))
-                .build();
-
-        cityWeatherService.deleteCityFromFavourites(weatherRequestDto, guid.get());
     }
 }

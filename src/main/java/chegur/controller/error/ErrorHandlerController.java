@@ -1,6 +1,7 @@
 package chegur.controller.error;
 
 import chegur.controller.BaseController;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,15 +17,8 @@ public class ErrorHandlerController extends BaseController {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         WebContext context = createWebContext(req, resp);
 
-        Integer statusCode = (Integer) req.getAttribute("jakarta.servlet.error.status_code");
-        String statusErrorMessage = (String) req.getAttribute("jakarta.servlet.error.message");
-
-        Throwable exception = (Throwable) req.getAttribute("javax.servlet.error.exception");
-        String exceptionErrorMessage = exception != null ? exception.getMessage() : "Unknown error";
-
-        if (exception != null) {
-            processError(exceptionErrorMessage, 500, context, resp);
-        }
+        Integer statusCode = (Integer) req.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+        String statusErrorMessage = (String) req.getAttribute(RequestDispatcher.ERROR_MESSAGE);
 
         if (statusCode == 401) {
             resp.sendRedirect("login");

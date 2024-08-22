@@ -1,8 +1,8 @@
 package chegur.controller.page;
 
 import chegur.controller.BaseController;
+import chegur.exception.CredentialsException;
 import chegur.exception.UserExistsException;
-import chegur.exception.UserNotFoundException;
 import chegur.service.AuthenticationService;
 import chegur.validator.CredentialsValidator;
 import jakarta.servlet.annotation.WebServlet;
@@ -28,18 +28,13 @@ public class RegisterController extends BaseController {
         String password = req.getParameter("password");
         String confirmedPassword = req.getParameter("password_repeat");
 
-        String errorMessage = CredentialsValidator.isDataValid(username, password, confirmedPassword);
         WebContext context = createWebContext(req, resp);
 
-        if (errorMessage != null) {
-            processError(errorMessage, context, resp);
-            return;
-        }
-
         try {
+            CredentialsValidator.validateData(username, password, confirmedPassword);
             authenticationService.register(username, password);
-        } catch (UserExistsException e) {
-            processError("Username already taken", context, resp);
+        } catch (CredentialsException | UserExistsException e) {
+            processError(e.getMessage(), context, resp);
             return;
         }
 

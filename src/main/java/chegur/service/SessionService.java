@@ -3,7 +3,7 @@ package chegur.service;
 import chegur.dao.impl.UserSessionDao;
 import chegur.entity.User;
 import chegur.entity.UserSession;
-import chegur.exception.SessionNotFoundException;
+import chegur.exception.SessionException;
 import chegur.exception.UserNotFoundException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -27,7 +27,7 @@ public class SessionService {
         if (userSession.isPresent()) {
             return userSession.get().getUser();
         } else {
-            throw new UserNotFoundException();
+            throw new UserNotFoundException("User was not found");
         }
     }
 
@@ -39,7 +39,7 @@ public class SessionService {
     public void invalidateSession(String guid) {
         try {
             userSessionDao.deleteSession(guid);
-        } catch (SessionNotFoundException ignored) {
+        } catch (SessionException ignored) {
         }
     }
 

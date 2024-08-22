@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-@WebFilter(urlPatterns = {"/home", "/found-locations"})
+@WebFilter(urlPatterns = {"/home", "/found-locations", "/logout"})
 public class ProtectedPathFilter implements Filter {
     private final SessionService sessionService = SessionService.getInstance();
 

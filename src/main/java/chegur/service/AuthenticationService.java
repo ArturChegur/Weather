@@ -2,6 +2,7 @@ package chegur.service;
 
 import chegur.dao.impl.UserDao;
 import chegur.entity.User;
+import chegur.exception.CredentialsException;
 import chegur.exception.UserExistsException;
 import chegur.exception.UserNotFoundException;
 import lombok.AccessLevel;
@@ -11,7 +12,6 @@ import org.hibernate.HibernateException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
-import java.util.Optional;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AuthenticationService {
@@ -20,21 +20,23 @@ public class AuthenticationService {
     private final UserDao userDao = UserDao.getInstance();
     private final SessionService sessionService = SessionService.getInstance();
 
-    public String logIn(String login, String password) {
-        Optional<User> user = userDao.getUser(buildUser(login, hashPassword(password)));
+    public String logIn(String username, String password) {
+        User user = userDao.getUser(username).orElseThrow(() -> new UserNotFoundException("User was not found"));
 
-        if (user.isPresent()) {
-            return sessionService.startSession(user.get());
+        String hashedPassword = hashPassword(password);
+
+        if (user.getPassword().equals(hashedPassword)) {
+            return sessionService.startSession(user);
         } else {
-            throw new UserNotFoundException();
+            throw new CredentialsException("Password in incorrect");
         }
     }
 
     public void register(String login, String password) {
         try {
-            userDao.save(buildUser(login, hashPassword(password)));
+            userDao.save(buildUser(login, password));
         } catch (HibernateException e) {
-            throw new UserExistsException();
+            throw new UserExistsException("User with this username already exists");
         }
     }
 

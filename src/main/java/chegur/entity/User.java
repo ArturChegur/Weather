@@ -3,7 +3,6 @@ package chegur.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.LinkedList;
 import java.util.List;
 
 @Getter
@@ -25,5 +24,5 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Location> locations = new LinkedList<>();
+    private List<Location> locations;
 }

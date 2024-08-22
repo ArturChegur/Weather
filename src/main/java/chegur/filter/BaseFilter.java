@@ -15,6 +15,7 @@ public class BaseFilter implements Filter {
             "/Weather/found-locations",
             "/Weather/login",
             "/Weather/register",
+            "/Weather/logout",
             "/Weather/images/background.png",
             "/Weather/css/home-found-locations.css",
             "/Weather/css/login-registration.css");
@@ -35,6 +36,6 @@ public class BaseFilter implements Filter {
     }
 
     private static boolean isAllowedPath(String uri) {
-        return ALLOWED_PATH.stream().anyMatch(uri::equals);
+        return ALLOWED_PATH.contains(uri);
     }
 }

@@ -11,7 +11,7 @@ import lombok.ToString;
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ToString
-public class OneCallResponseDto {
+public class OpenWeatherResponseDto {
     @JsonIgnore
     private int cityId;
 

@@ -52,31 +52,10 @@
                 document.querySelectorAll('.city-card').forEach(card => {
                     const latitudeElement = card.querySelector('.latitude');
                     const longitudeElement = card.querySelector('.longitude');
-                    const temp = card.querySelector('.temperature');
-                    const tempMin = card.querySelector('.tempMin');
-                    const tempMax = card.querySelector('.tempMax');
-                    const feelsLike = card.querySelector('.feelsLike');
-
 
                     if (latitudeElement && longitudeElement) {
                         latitudeElement.textContent = formatNumber(latitudeElement.textContent, 3);
                         longitudeElement.textContent = formatNumber(longitudeElement.textContent, 3);
-                    }
-
-                    if (temp) {
-                        temp.textContent = (+temp.textContent).toFixed(1);
-                    }
-
-                    if (tempMin) {
-                        tempMin.textContent = (+tempMin.textContent).toFixed(1);
-                    }
-
-                    if (tempMax) {
-                        tempMax.textContent = (+tempMax.textContent).toFixed(1);
-                    }
-
-                    if (feelsLike) {
-                        feelsLike.textContent = (+feelsLike.textContent).toFixed(1);
                     }
                 });
             }
@@ -126,7 +105,7 @@
     </div>
     <div class="user-info">
         <span th:text="${username}">Username</span>
-        <form th:action="@{/home}" method="post" style="margin: 0;">
+        <form th:action="@{/logout}" method="get" style="margin: 0;">
             <button type="submit" class="btn" name="action" value="logout">LogOut</button>
         </form>
     </div>
@@ -144,11 +123,11 @@
             <p><i class="fas fa-temperature-low"></i> Feels Like: <span class="feelsLike"
                                                                         th:text="${city.main.feelsLike}">Feels Like</span>
                 °C</p>
-            <p><i class="fas fa-temperature-high"></i> Temperature Min: <span class="tempMin"
-                                                                              th:text="${city.main.tempMin}">Temperature Min</span>
+            <p><i class="fas fa-temperature-high"></i> Temp Min: <span class="tempMin"
+                                                                       th:text="${city.main.tempMin}">Temperature Min</span>
                 °C</p>
-            <p><i class="fas fa-temperature-high"></i> Temperature Max: <span class="tempMax"
-                                                                              th:text="${city.main.tempMax}">Temperature Max</span>
+            <p><i class="fas fa-temperature-high"></i> Temp Max: <span class="tempMax"
+                                                                       th:text="${city.main.tempMax}">Temperature Max</span>
                 °C</p>
             <p><i class="fas fa-tachometer-alt"></i> Pressure: <span th:text="${city.main.pressure}">Pressure</span> hPa
             </p>

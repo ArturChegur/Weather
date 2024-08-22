@@ -2,7 +2,7 @@ package chegur.dao.impl;
 
 import chegur.dao.Dao;
 import chegur.entity.UserSession;
-import chegur.exception.SessionNotFoundException;
+import chegur.exception.SessionException;
 import chegur.util.HibernateUtil;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -22,6 +22,8 @@ public class UserSessionDao implements Dao<UserSession> {
             session.beginTransaction();
             session.save(userSession);
             session.getTransaction().commit();
+        } catch (HibernateException e) {
+            throw new SessionException();
         }
     }
 
@@ -35,7 +37,7 @@ public class UserSessionDao implements Dao<UserSession> {
             query.executeUpdate();
             session.getTransaction().commit();
         } catch (HibernateException e) {
-            throw new SessionNotFoundException();
+            throw new SessionException();
         }
     }
 
@@ -45,6 +47,8 @@ public class UserSessionDao implements Dao<UserSession> {
             Query<UserSession> query = session.createQuery("from UserSession where guid = :guid", UserSession.class);
             query.setParameter("guid", userSession.getGuid());
             return query.uniqueResultOptional();
+        } catch (HibernateException e) {
+            throw new SessionException();
         }
     }
 

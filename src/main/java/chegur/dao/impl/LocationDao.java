@@ -2,7 +2,7 @@ package chegur.dao.impl;
 
 import chegur.dao.Dao;
 import chegur.entity.Location;
-import chegur.exception.LocationExistsException;
+import chegur.exception.LocationException;
 import chegur.util.HibernateUtil;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -20,7 +20,7 @@ public class LocationDao implements Dao<Location> {
             session.save(location);
             session.getTransaction().commit();
         } catch (HibernateException e) {
-            throw new LocationExistsException();
+            throw new LocationException();
         }
     }
 

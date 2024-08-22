@@ -24,17 +24,18 @@ public class FoundLocationsController extends BaseController {
         WebContext context = createWebContext(req, resp);
         String cityName = req.getParameter("cityName");
 
-        if (cityName == null || cityName.isEmpty() || cityName.isBlank()) {
+        if (cityName == null || cityName.isBlank()) {
             processError("Fill up city name!", context, resp);
             return;
         }
 
-        List<GeocodingResponseDto> foundCities = List.of();
+        List<GeocodingResponseDto> foundCities;
 
         try {
             foundCities = cityWeatherService.getCityByName(cityName);
         } catch (RuntimeException e) {
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Wrong Geocoding API call");
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+            return;
         }
 
         if (foundCities != null && foundCities.isEmpty()) {
@@ -56,8 +57,9 @@ public class FoundLocationsController extends BaseController {
             cityName = req.getParameter("cityName");
             latitude = new BigDecimal(req.getParameter("latitude"));
             longitude = new BigDecimal(req.getParameter("longitude"));
-        } catch (NumberFormatException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Wrong parameters format");
+            return;
         }
 
         Optional<String> guid = CookieHandler.getSessionCookie(req);
@@ -75,7 +77,8 @@ public class FoundLocationsController extends BaseController {
         try {
             cityWeatherService.saveCityToUserFavourites(weatherRequestDto, guid.get());
         } catch (Exception e) {
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+            return;
         }
 
         resp.setStatus(HttpServletResponse.SC_OK);
