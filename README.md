@@ -31,3 +31,8 @@ This is a Java web application for viewing current weather conditions. Users can
 
 - Ensure Docker is installed and running on your machine.
 - The application fetches weather data from an external API. Make sure to configure API keys if needed.
+
+
+Project`s technical specifications - https://zhukovsd.github.io/java-backend-learning-course/Projects/TennisScoreboard/
+
+Author - [ArturChegur]
