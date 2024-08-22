@@ -33,6 +33,6 @@ This is a Java web application for viewing current weather conditions. Users can
 - The application fetches weather data from an external API. Make sure to configure API keys if needed.
 
 
-Project`s technical specifications - https://zhukovsd.github.io/java-backend-learning-course/Projects/TennisScoreboard/
+Project`s technical specifications - https://zhukovsd.github.io/java-backend-learning-course/projects/weather-viewer/
 
 Author - [ArturChegur]
